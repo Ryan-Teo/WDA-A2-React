@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+main {
+  text-align: center;
+}
+
+nav {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: darkorange;
+  color: #FFF;
+}
+
+nav > div {
+  display: flex;
+  align-items: center;
+}
+
+nav > div > i {
+  font-size: 2rem;
+  font-style: normal;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+nav > div > a {
+  padding: 10px 20px;
+  color: #FFF;
+  text-decoration: none;
+}
+
+aside {
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: blueviolet;
+  color: #FFF;
+  transition: 300ms ease transform;
+  z-index: 50;
+}
+
+aside > div {
+  z-index: 52;
+  position: relative;
+  padding: 20px;
+  text-align: left;
+  height: 100%;
+}
+
+aside a {
+  color: #FFF;
+  text-decoration: none;
+  padding: 5px 10px;
+  margin: 20px 0;
+  display: block;
+}
+
+aside a.active {
+  border: 1px solid #FFF;
+  border-radius: 5px;
+}
+
+aside.closed {
+  transform: translateX(-200px);
+}
+
+aside.closed .backdrop {
+  opacity: 0;
+  visibility: hidden;
+}
+
+aside .backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100vw + 200px);
+  height: 100vh;
+  background: rgba(0,0,0,0.2);
+  z-index: 51;
+  transition: 300ms ease opacity, 300ms ease visibility;
+}
+
+aside ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+form {
+  display: flex;
+  max-width: 500px;
+  width: 100%;
+  flex-flow: column;
+  margin: 0 auto;
+}
+
+form input {
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin: 5px;
+}
+
