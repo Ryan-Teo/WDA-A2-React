@@ -1,3 +1,3 @@
-const apiurl = 'http://localhost/week9/public';
+const apiurl = 'http://localhost/WDA-assignment-1/public';
 
 export { apiurl };

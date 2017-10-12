@@ -12,7 +12,7 @@ class Tech extends Component {
         /* Fetch all tickets and check which tickets have
             been assigned to this tech user
          */
-        fetch(apiurl + '/api/tickets')
+        fetch(apiurl + '/api/inquiryCRUD/list')
             .then((response) => response.json())
             .then((responseJson) => {
                 const myTickets = [];
