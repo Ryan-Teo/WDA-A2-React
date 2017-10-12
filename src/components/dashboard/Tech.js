@@ -45,6 +45,13 @@ class Tech extends Component {
                 )
                 : tickets.map((ticket, i) => (
                     <Panel key={i} header={ticket.title}>
+                        <p>{ticket.id}</p>
+                        <p>{ticket.user_name}</p>
+                        <p>{ticket.user_email}</p>
+                        <p>{ticket.os}</p>
+                        <p>{ticket.software_issue}</p>
+                        <p>{ticket.description}</p>
+                        <p>{ticket.status}</p>
                         <p>{ticket.comment}</p>
                     </Panel>
                 ))}
