@@ -16,8 +16,6 @@ class Helpdesk extends Component {
         /* Fetch all tickets and check which tickets have
             an assigned tech
          */
-
-        //fetch all submitted inquiries from database
         fetch(apiurl + '/api/inquiryCRUD/list')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -97,10 +95,7 @@ class Helpdesk extends Component {
         window.location.reload();
     }
 
-    /* Render the page! */
-    /* TODO : Complete in your own time:
-        Do you think you could split this page into separate sub-components?
-     */
+    /*Render page*/
     render () {
         const vm = this
         const { selectedTicket, tickets, techUsers } = this.state
@@ -117,17 +112,23 @@ class Helpdesk extends Component {
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Username</th>
+                                <th>OS</th>
+                                <th>Issue</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {tickets.map((ticket, i) => (
+                            {tickets.map((inquiry, i) => (
                                 <tr key={i}>
-                                    <td>{ticket.id}</td>
-                                    <td>{ticket.title}</td>
+                                    <td>{inquiry.id}</td>
+                                    <td>{inquiry.user_name}</td>
+                                    <td>{inquiry.os}</td>
+                                    <td>{inquiry.software_issue}</td>
+                                    <td>{inquiry.status}</td>
                                     <td>
-                                        <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === ticket.id ? 'success' : 'info'} onClick={() => vm.ticketDetailsClick(ticket)}>More Details</Button>
+                                        <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'} onClick={() => vm.ticketDetailsClick(inquiry)}>More Details</Button>
                                     </td>
                                 </tr>
                             ))}

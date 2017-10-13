@@ -1,4 +1,3 @@
-const apiurl = 'http://localhost/WDA-1/public/api/inquiryCRUD/list';
-// http://localhost/WDA-1/public/api/inquiryCRUD/list
+const apiurl = 'http://localhost/WDA-assignment-1/public';
 
 export { apiurl };
