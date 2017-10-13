@@ -12,12 +12,12 @@ class Tech extends Component {
         /* Fetch all tickets and check which tickets have
             been assigned to this tech user
          */
-        fetch(apiurl + '/api/tickets')
+        fetch(apiurl + '/api/inquiryCRUD/list')
             .then((response) => response.json())
             .then((responseJson) => {
                 const myTickets = [];
                 for(const ele in responseJson) {
-                    firebase.database().ref('ticket/'+responseJson[ele].id).on('value', (snapshot) => {
+                    firebase.database().ref('inquiryCRUD/'+responseJson[ele].id).on('value', (snapshot) => {
                         if(snapshot.val() !== null && snapshot.val().user_id === this.props.user.uid) {
                             myTickets.push(responseJson[ele]);
 

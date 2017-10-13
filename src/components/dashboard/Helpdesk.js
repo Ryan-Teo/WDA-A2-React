@@ -16,12 +16,14 @@ class Helpdesk extends Component {
         /* Fetch all tickets and check which tickets have
             an assigned tech
          */
-        fetch(apiurl + '/api/tickets')
+
+        //fetch all submitted inquiries from database
+        fetch(apiurl + '/api/inquiryCRUD/list')
             .then((response) => response.json())
             .then((responseJson) => {
                 const pendingTickets = [];
                 for(const ele in responseJson) {
-                    firebase.database().ref('ticket/'+responseJson[ele].id).on('value', (snapshot) => {
+                    firebase.database().ref('inquiryCRUD/'+responseJson[ele].id).on('value', (snapshot) => {
                         if(snapshot.val() === null) {
                             pendingTickets.push(responseJson[ele]);
 
