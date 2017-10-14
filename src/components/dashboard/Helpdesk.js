@@ -95,7 +95,7 @@ class Helpdesk extends Component {
         window.location.reload();
     }
 
-    /*Render page*/
+    /* Render page */
     render () {
         const vm = this
         const { selectedTicket, tickets, techUsers } = this.state
@@ -105,9 +105,11 @@ class Helpdesk extends Component {
                 <Row>
                     <Col md={(selectedTicket !== null ? 7 : 12)}>
                         <h1>Pending Tickets</h1>
-                        {tickets.length < 1 && (
-                            <p className="alert alert-info">There are no tickets to display.</p>
-                        )}
+                        {
+                            tickets.length < 1 && (
+                                <p className="alert alert-info">There are no tickets to display.</p>
+                            )
+                        }
                         <Table striped hover>
                             <thead>
                             <tr>
@@ -120,7 +122,8 @@ class Helpdesk extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {tickets.map((inquiry, i) => (
+                            {
+                                tickets.map((inquiry, i) => (
                                 <tr key={i}>
                                     <td>{inquiry.id}</td>
                                     <td>{inquiry.user_name}</td>
@@ -131,38 +134,43 @@ class Helpdesk extends Component {
                                         <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'} onClick={() => vm.ticketDetailsClick(inquiry)}>More Details</Button>
                                     </td>
                                 </tr>
-                            ))}
+                                ))
+                            }
                             </tbody>
                         </Table>
                     </Col>
-                    {selectedTicket !== null && (
-                    <Col md={5}>
-                        <Jumbotron style={{padding: 10}}>
-                            <Button block bsStyle="danger" onClick={this.closeDialogClick}>Close Dialog</Button>
-                            <h3 className="text-uppercase">Ticket Details</h3>
-                            <p><b>ID: </b>{selectedTicket.id}</p>
-                            <p><b>Title: </b><br/>{selectedTicket.title}</p>
-                            <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
-                            {techUsers.length > 0 && (
-                                <div>
-                                    <hr/>
-                                    <h3 className="text-uppercase">Assign to tech</h3>
-                                    <select className="form-control" onChange={this.handleTechChange} defaultValue="-1">
-                                    <option value="-1" defaultValue disabled>Select a tech user</option>
-                                    {techUsers.map((user, i) => (
-                                        <option key={i} value={user.id}>{user.name}</option>
-                                    ))}
-                                    </select>
+                    {
+                        selectedTicket !== null && (
+                        <Col md={5}>
+                            <Jumbotron style={{padding: 10}}>
+                                <Button block bsStyle="danger" onClick={this.closeDialogClick}>Close Dialog</Button>
+                                <h3 className="text-uppercase">Ticket Details</h3>
+                                <p><b>ID: </b>{selectedTicket.id}</p>
+                                <p><b>Title: </b><br/>{selectedTicket.title}</p>
+                                <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
+                                <p><b>priority: </b><br/>{selectedTicket.priority}</p>
+                                <p><b>level: </b><br/>{selectedTicket.level}</p>
+                                {techUsers.length > 0 && (
+                                    <div>
+                                        <hr/>
+                                        <h3 className="text-uppercase">Assign to tech</h3>
+                                        <select className="form-control" onChange={this.handleTechChange} defaultValue="-1">
+                                        <option value="-1" defaultValue disabled>Select a tech user</option>
+                                        {techUsers.map((user, i) => (
+                                            <option key={i} value={user.id}>{user.name}</option>
+                                        ))}
+                                        </select>
 
-                                    <div className="clearfix"><br/>
-                                        <Button className="pull-right" bsStyle="success" onClick={this.assignTicketToTech}>Assign</Button>
+                                        <div className="clearfix"><br/>
+                                            <Button className="pull-right" bsStyle="success" onClick={this.assignTicketToTech}>Assign</Button>
+                                        </div>
                                     </div>
-                                </div>
-                                )
-                            }
-                        </Jumbotron>
-                    </Col>
-                    )}
+                                    )
+                                }
+                            </Jumbotron>
+                        </Col>
+                        )
+                    }
                 </Row>
             </div>
         );
