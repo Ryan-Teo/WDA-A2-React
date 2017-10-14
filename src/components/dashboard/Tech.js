@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { apiurl } from "../../helper/constants";
 import firebase from 'firebase';
 import { Editor } from 'react-draft-wysiwyg';
+import {EditorState} from 'draft-js';
 import { Table, Row, Col, Jumbotron, Button } from 'react-bootstrap';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Modal from 'react-modal';
@@ -31,10 +32,9 @@ class Tech extends Component {
     state = {
         tickets: [],
         selectedTicket: null,
-        editorState: null,
+        editorState: EditorState.createEmpty(),
         priority:null,
-        modalIsOpen:false,
-        status:"please specify status"
+        modalIsOpen: false
     }
 
 
@@ -83,7 +83,8 @@ class Tech extends Component {
     ticketUpdateClick = (ticket) => {
         const { selectedTicket } = this.state;
         this.setState({
-            selectedTicket: (selectedTicket !== null && selectedTicket.id === ticket.id ? null : ticket)
+            selectedTicket: (selectedTicket !== null && selectedTicket.id === ticket.id ? null : ticket),
+            modalIsOpen: true //open up modal screen
         });
     }
 
@@ -100,7 +101,9 @@ class Tech extends Component {
 
     // Handle change on editor
     onEditorStateChange = (editorState) => {
-        this.setState({ editorState, });
+        this.setState({
+            editorState,
+        });
     }
 
     //Post to API url in laravel side
@@ -108,7 +111,7 @@ class Tech extends Component {
     {
         var priority = this.state.priority;
         var status = this.state.status;
-        var comment = this.state.commentValue;
+        var comment = this.state.editorState;
 
         fetch(apiurl + "/api/inquiryCRUD" + this.state.selectedTicket.id +"/update",
             {
@@ -137,6 +140,8 @@ class Tech extends Component {
     }
 
     handleSubmit = (e) => {
+        var formData = JSON.stringify((e).serializeArray());
+        console.log("Sumbit: ", formData);
         this.updateTicket();
         e.preventDefault();
     }
@@ -146,7 +151,6 @@ class Tech extends Component {
     render () {
         const vm = this
         const { tickets, selectedTicket } = this.state
-
         return(
             <div>
                 <Row>
@@ -179,11 +183,8 @@ class Tech extends Component {
                                         <td>{inquiry.software_issue}</td>
                                         <td>{inquiry.status}</td>
                                         {/* each row has an update button and when a ticket is selected, update selectedTicket state */}
-                                        <td>
-                                            <Button bsStyle={
-                                                    vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'
-                                                } onClick={() => vm.ticketUpdateClick(inquiry)}>Edit
-                                            </Button>
+                                        <td className ="text-center">
+                                            <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'} onClick={() => vm.ticketUpdateClick(inquiry)}>Edit</Button>
                                         </td>
                                     </tr>
                                 ))
@@ -192,7 +193,6 @@ class Tech extends Component {
                         </Table>
                     </Col>
                 </Row>
-
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
@@ -217,13 +217,13 @@ class Tech extends Component {
                             {
                                 // render form to add comment to ticket
                                 <form onSubmit={this.handleSubmit}>
-                                    <div class ="container">
+                                    <div className ="container">
                                         <Editor
-                                            editorState={this.editorState}
+                                            editorState={this.state.editorState}
                                             toolbarOnFocus
-                                            toolbarClassName="toolbarClassName"
-                                            wrapperClassName="wrapperClassName"
-                                            editorClassName="editorClassName"
+                                            wrapperClassName="wrapper-class"
+                                            editorClassName="editor-class"
+                                            toolbarClassName="toolbar-class"
                                             onEditorStateChange={this.onEditorStateChange}
                                         />
                                     </div>
@@ -237,32 +237,14 @@ class Tech extends Component {
                                         <option value="undefined">Undefined</option>
                                     </select>
 
-                                    {/* update selectedTicket priority through radio button */}
-                                    <h3>Ticket Priority</h3>
-                                    <div className="radio">
-                                        <label>
-                                            <input type="radio" value="low"
-                                                   checked={this.state.priority === 'low'}
-                                                   onChange={this.handlePriorityOptionChange} />
-                                            Low
-                                        </label>
-                                    </div>
-                                    <div className="radio">
-                                        <label>
-                                            <input type="radio" value="medium"
-                                                   checked={this.state.priority === 'medium'}
-                                                   onChange={this.handlePriorityOptionChange} />
-                                            Medium
-                                        </label>
-                                    </div>
-                                    <div className="radio">
-                                        <label>
-                                            <input type="radio" value="high"
-                                                   checked={this.state.priority === 'high'}
-                                                   onChange={this.handlePriorityOptionChange} />
-                                            High
-                                        </label>
-                                    </div>
+                                        {/*  edit selectedTicket status  */}
+                                    <h3>Ticket Status</h3>
+                                        <select value={this.state.status} onChange={this.handleStatusOptionChange} >
+                                            <option value="resolved">Resolved</option>
+                                            <option value="unresolved">Unresolved</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="undefined">Undefined</option>
+                                        </select>
 
                                     <div className="clearfix"><br/>
                                         <Button className="pull-right" typebsStyle="success" type="submit" value="Submit">Update</Button>

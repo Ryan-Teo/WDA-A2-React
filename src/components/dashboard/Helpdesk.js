@@ -89,10 +89,11 @@ class Helpdesk extends Component {
                 if(snapshot.val()[ele].type === 'tech') {
                     tempTech.push(snapshot.val()[ele]);
                 }
-            };
+            }
             this.setState({
                 techUsers: tempTech
             });
+
         })
     }
 
@@ -150,12 +151,9 @@ class Helpdesk extends Component {
 
     /*Render page*/
     render () {
-
-
-
         const vm = this
         const { selectedTicket, tickets, techUsers } = this.state
-
+        console.log("Tech users: ", techUsers);
         return (
             <div>
                 <Row>
@@ -209,21 +207,109 @@ class Helpdesk extends Component {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-
-                    {/*<h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>*/}
-
                     {selectedTicket !== null && (
-                            <Jumbotron style={{padding: 10}}>
+                        <div className="row">
+                            <Jumbotron style={{padding: 10, borderRadius: '5px'}}>
                                 <Button block bsStyle="danger" onClick={this.closeModal}>Close Dialog</Button>
-                                <h3 className="text-uppercase">Inquiry Details</h3>
-                                <p><b>ID: </b>{selectedTicket.id}</p>
-                                <p><b>Title: </b><br/>{selectedTicket.title}</p>
-                                <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
-                                <p><b>priority: </b><br/>{selectedTicket.priority}</p>
-                                <p><b>level: </b><br/>{selectedTicket.level}</p>
-                                <div>
-                                    <hr/>
-                                </div>
+                                <table className="ticketData table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colSpan={3} >
+                                                <h3 className="text-uppercase">Inquiry Details</h3>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <b>User's Name: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.user_name}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>User's email: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.user_email}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Ticket ID: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.id}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>OS: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.os}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Issue: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.software_issue}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Status: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.status}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Description: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.description}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Comment: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.comment}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Priority: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {(selectedTicket.priority === null) ? "-NA-" : selectedTicket.priority}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Escalation Level: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.level}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {selectedTicket.esc_requested === 1 && (
+                                    <div>
+                                        <hr/>
+                                        <h2>Escalation Request</h2>
+                                        <button bsStyle="success">Grant</button>
+                                        <button bsStyle="fail">Decline</button>
+                                    </div>
+                                )}
                                 {techUsers.length > 0 && (
                                     <div>
                                         <hr/>
@@ -242,6 +328,7 @@ class Helpdesk extends Component {
                                 )
                                 }
                             </Jumbotron>
+                        </div>
                     )}
                 </Modal>
             </div>
