@@ -110,10 +110,15 @@ class App extends Component {
                                 <Redirect to="/" />
                             )
                     )} />
-                    <footer className="text-center">
-                        <p>
-                            Example demo written by Nicholas Zuccarelli
-                        </p>
+                    <footer className="footer">
+                        <div className="row ">
+                            <div className="col-lg-6 col-md-6 col-sm-6 pull-left ">
+                                <p className="text-muted">&copy; ABCD Company 2017</p>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-6">
+                                <p className="text-muted pull-right">Made by : Harry Utomo (s3510376) & Ryan Teo (s3444615)</p>
+                            </div>
+                        </div>
                     </footer>
                 </div>
             </div>

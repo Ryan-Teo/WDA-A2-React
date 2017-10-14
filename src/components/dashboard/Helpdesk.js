@@ -89,10 +89,11 @@ class Helpdesk extends Component {
                 if(snapshot.val()[ele].type === 'tech') {
                     tempTech.push(snapshot.val()[ele]);
                 }
-            };
+            }
             this.setState({
                 techUsers: tempTech
             });
+
         })
     }
 
@@ -155,7 +156,7 @@ class Helpdesk extends Component {
 
         const vm = this
         const { selectedTicket, tickets, techUsers } = this.state
-
+        console.log("Tech users: ", techUsers);
         return (
             <div>
                 <Row>
@@ -209,21 +210,43 @@ class Helpdesk extends Component {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-
-                    {/*<h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>*/}
-
                     {selectedTicket !== null && (
-                            <Jumbotron style={{padding: 10}}>
+                        <div className="row">
+                            <Jumbotron style={{padding: 10, borderRadius: '5px'}}>
                                 <Button block bsStyle="danger" onClick={this.closeModal}>Close Dialog</Button>
-                                <h3 className="text-uppercase">Inquiry Details</h3>
-                                <p><b>ID: </b>{selectedTicket.id}</p>
-                                <p><b>Title: </b><br/>{selectedTicket.title}</p>
+                                <table>
+                                    <th>
+                                        <h3 className="text-uppercase">Inquiry Details</h3>
+                                    </th>
+
+                                    <tr>
+                                        <td>
+                                            <b>User's Name: </b>
+                                        </td>
+                                        <td>
+                                            {selectedTicket.user_name}
+                                        </td>
+                                        <td>
+                                            <b>User's email: </b>
+                                        </td>
+                                        <td>
+                                            {selectedTicket.user_email}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p><b>Ticket ID: </b>{selectedTicket.id}</p> <p><b>OS: </b>{selectedTicket.os}</p>
+                                <p><b>Issue: </b><br/>{selectedTicket.software_issue}</p>
+                                <p><b>Status: </b>{selectedTicket.status}</p>
+                                <p><b>Description: </b><br/>{selectedTicket.description}</p>
                                 <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
-                                <p><b>priority: </b><br/>{selectedTicket.priority}</p>
-                                <p><b>level: </b><br/>{selectedTicket.level}</p>
-                                <div>
-                                    <hr/>
-                                </div>
+                                <div className="md-col-4 pull-left"><b>Priority: </b>{(selectedTicket.priority === null) ? "-NA-" : selectedTicket.priority}</div>
+                                <div className="md-col-4 pull-right"><b>Escalation Level: </b>{selectedTicket.level}</div>
+                                {selectedTicket.esc_requested === 1 && (
+                                    <div>
+                                        <hr/>
+                                        Escalate Me
+                                    </div>
+                                )}
                                 {techUsers.length > 0 && (
                                     <div>
                                         <hr/>
@@ -242,6 +265,7 @@ class Helpdesk extends Component {
                                 )
                                 }
                             </Jumbotron>
+                        </div>
                     )}
                 </Modal>
             </div>
