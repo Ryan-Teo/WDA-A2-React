@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c37ee98f-23d4-4c2e-90af-62f7f4f4dfab" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/dashboard/Helpdesk.js" afterPath="$PROJECT_DIR$/src/components/dashboard/Helpdesk.js" />
+=======
+<<<<<<< HEAD
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/dashboard/Helpdesk.js" afterPath="$PROJECT_DIR$/src/components/dashboard/Helpdesk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/dashboard/Tech.js" afterPath="$PROJECT_DIR$/src/components/dashboard/Tech.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/constants.js" afterPath="$PROJECT_DIR$/src/helper/constants.js" />
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/dashboard/Tech.js" afterPath="$PROJECT_DIR$/src/components/dashboard/Tech.js" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,11 +35,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="constants.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/helper/constants.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="10" lean-forward="false" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Helpdesk.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/dashboard/Helpdesk.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="595">
               <caret line="197" column="153" lean-forward="false" selection-start-line="197" selection-start-column="146" selection-end-line="197" selection-end-column="153" />
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="345">
+              <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+=======
+            <state relative-caret-position="510">
+              <caret line="132" column="37" lean-forward="true" selection-start-line="132" selection-start-column="37" selection-end-line="132" selection-end-column="37" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -49,8 +80,18 @@
       <file leaf-file-name="Tech.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/dashboard/Tech.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="387">
               <caret line="23" column="77" lean-forward="true" selection-start-line="23" selection-start-column="77" selection-end-line="23" selection-end-column="77" />
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="-84">
+              <caret line="19" column="56" lean-forward="false" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
+=======
+            <state relative-caret-position="596">
+              <caret line="49" column="45" lean-forward="false" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -217,6 +258,7 @@
     <option name="width" value="2576" />
     <option name="height" value="1416" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -233,7 +275,10 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+<<<<<<< HEAD
+=======
       <pane id="Scope" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,6 +292,24 @@
               <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
+<<<<<<< HEAD
+              <item name="wda_2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wda_2" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wda_2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wda_2" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wda_2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wda_2" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="dashboard" type="2a2b976b:PhpTreeStructureProvider$1" />
+=======
               <item name="react-wda-2" type="b2602c69:ProjectViewProjectNode" />
               <item name="react-wda-2" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
@@ -275,11 +338,16 @@
               <item name="react-wda-2" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="helper" type="2a2b976b:PhpTreeStructureProvider$1" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
+      <pane id="Scope" />
+=======
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -327,32 +395,67 @@
       <workItem from="1505868335727" duration="973000" />
       <workItem from="1506479148145" duration="3911000" />
       <workItem from="1506997968523" duration="2382000" />
+<<<<<<< HEAD
+      <workItem from="1507097131959" duration="2690000" />
+      <workItem from="1507615409918" duration="1375000" />
+=======
       <workItem from="1507097131959" duration="1030000" />
       <workItem from="1507690422838" duration="2123000" />
+<<<<<<< HEAD
       <workItem from="1507787229381" duration="30008000" />
+=======
+      <workItem from="1507787229381" duration="6365000" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="60743000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="31647000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1366" height="768" extended-state="0" />
+=======
+    <option name="totallyTimeSpent" value="37100000" />
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19601838" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32729805" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286908" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34839204" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286908" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -577,7 +680,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="187">
+=======
+        <state relative-caret-position="60">
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
@@ -585,6 +692,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/logo.svg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -594,6 +702,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Dashboard.js">
+=======
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="96" column="96" lean-forward="false" selection-start-line="96" selection-start-column="96" selection-end-line="96" selection-end-column="96" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/auth.js">
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="30" lean-forward="false" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
@@ -609,7 +730,22 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/index.css">
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/helper/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="10" lean-forward="false" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+=======
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+    <entry file="file://$PROJECT_DIR$/src/components/Dashboard.js">
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="897">
           <caret line="111" column="0" lean-forward="true" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
@@ -617,7 +753,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/App.css">
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/components/dashboard/Helpdesk.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
@@ -627,9 +773,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/dashboard/Helpdesk.css">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="221">
           <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
           <folding />
+=======
+        <state relative-caret-position="1530">
+          <caret line="96" column="96" lean-forward="false" selection-start-line="96" selection-start-column="96" selection-end-line="96" selection-end-column="96" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
         </state>
       </provider>
     </entry>
@@ -666,8 +821,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/dashboard/Tech.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="387">
           <caret line="23" column="77" lean-forward="true" selection-start-line="23" selection-start-column="77" selection-end-line="23" selection-end-column="77" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="-84">
+          <caret line="19" column="56" lean-forward="false" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
+=======
+        <state relative-caret-position="596">
+          <caret line="49" column="45" lean-forward="false" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+>>>>>>> eb38e32c135ad8c6d44d0bb7de9a0251f219acaf
+>>>>>>> 84c19d1c5c81547aa068c775b56dbb374dd28631
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

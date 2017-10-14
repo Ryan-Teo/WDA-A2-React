@@ -101,15 +101,21 @@ class Helpdesk extends Component {
         const { selectedTicket } = this.state;
         this.setState({
             selectedTicket: (selectedTicket !== null && selectedTicket.id === ticket.id ? null : ticket),
-            modalIsOpen: true
+            modalIsOpen: true //open up modal screen
         });
     }
 
+    afterOpenModal =()=> {
+        // references are now sync'd and can be accessed.
+        // this.subtitle.style.color = '#f00';
+    }
+
     /* Close button for dialog */
-    closeDialogClick = () => {
+    closeModal =()=> {
         this.setState({
+            modalIsOpen: false,
             selectedTicket: null
-        })
+        });
     }
 
     /* Update the selected tech from dropdown box */
@@ -130,7 +136,6 @@ class Helpdesk extends Component {
         data['ticket/' + this.state.selectedTicket.id] = {
             ticket_id: this.state.selectedTicket.id,
             user_id: this.state.selectedTech, // stored Tech ID
-            escalation_requested: false //init as false & reset when set to another tech
         };
         firebase.database().ref().update(data)
         alert('Tech successfully assigned to ticket!');
@@ -141,20 +146,7 @@ class Helpdesk extends Component {
 
     }
 
-    openModal =()=> {
-        this.setState({
-            modalIsOpen: true
-        });
-    }
 
-    afterOpenModal =()=> {
-        // references are now sync'd and can be accessed.
-        // this.subtitle.style.color = '#f00';
-    }
-
-    closeModal =()=> {
-        this.setState({modalIsOpen: false});
-    }
 
     /*Render page*/
     render () {
@@ -167,11 +159,13 @@ class Helpdesk extends Component {
         return (
             <div>
                 <Row>
-                    <Col md={(selectedTicket !== null ? 7 : 12)}>
+                    <Col md={12}>
                         <h1>Pending Tickets</h1>
-                        {tickets.length < 1 && (
-                            <p className="alert alert-info">There are no tickets to display.</p>
-                        )}
+                        {
+                            tickets.length < 1 && (
+                                <p className="alert alert-info">There are no tickets to display.</p>
+                            )
+                        }
                         <Table striped hover>
                             <thead>
                             <tr>
@@ -186,13 +180,14 @@ class Helpdesk extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {tickets.map((inquiry, i) => (
+                            {
+                                tickets.map((inquiry, i) => (
                                 <tr key={i}>
                                     <td className ="text-center">{inquiry.id}</td>
                                     <td>{inquiry.os}</td>
                                     <td>{inquiry.software_issue}</td>
                                     <td>{inquiry.status}</td>
-                                    <td className ="text-center"> {(inquiry.priority === "") ? "-NA-" : inquiry.priority} </td>
+                                    <td className ="text-center"> {(inquiry.priority === null) ? "-NA-" : inquiry.priority} </td>
                                     <td className ="text-center"> {inquiry.level} </td>
                                     <td className ="text-center">
                                         <div style= {(inquiry.esc_requested === 1) ? divAtten : divNoAtten} > {(inquiry.esc_requested === 1) ? 'Yes' : 'No'} </div>
@@ -201,43 +196,12 @@ class Helpdesk extends Component {
                                         <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'} onClick={() => vm.ticketDetailsClick(inquiry)}>More Details</Button>
                                     </td>
                                 </tr>
-                            ))}
+                                ))
+                            }
                             </tbody>
                         </Table>
                     </Col>
-                    {selectedTicket !== null && (
-                    <Col md={5}>
-                        <Jumbotron style={{padding: 10}}>
-                            <Button block bsStyle="danger" onClick={this.closeDialogClick}>Close Dialog</Button>
-                            <h3 className="text-uppercase">Inquiry Details</h3>
-                            <p><b>ID: </b>{selectedTicket.id}</p>
-                            <p><b>Title: </b><br/>{selectedTicket.title}</p>
-                            <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
-                            <div>
-                                <hr/>
-                            </div>
-                            {techUsers.length > 0 && (
-                                <div>
-                                    <hr/>
-                                    <h3 className="text-uppercase">Assign to tech</h3>
-                                    <select className="form-control" onChange={this.handleTechChange} defaultValue="-1">
-                                    <option value="-1" defaultValue disabled>Select a tech user</option>
-                                    {techUsers.map((user, i) => (
-                                        <option key={i} value={user.id}>{user.name}</option>
-                                    ))}
-                                    </select>
-
-                                    <div className="clearfix"><br/>
-                                        <Button className="pull-right" bsStyle="success" onClick={this.assignTicketToTech}>Assign</Button>
-                                    </div>
-                                </div>
-                                )
-                            }
-                        </Jumbotron>
-                    </Col>
-                    )}
                 </Row>
-                <button onClick={this.openModal}>Open Modal</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
@@ -255,6 +219,8 @@ class Helpdesk extends Component {
                                 <p><b>ID: </b>{selectedTicket.id}</p>
                                 <p><b>Title: </b><br/>{selectedTicket.title}</p>
                                 <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
+                                <p><b>priority: </b><br/>{selectedTicket.priority}</p>
+                                <p><b>level: </b><br/>{selectedTicket.level}</p>
                                 <div>
                                     <hr/>
                                 </div>
