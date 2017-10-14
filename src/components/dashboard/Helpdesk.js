@@ -214,37 +214,103 @@ class Helpdesk extends Component {
                         <div className="row">
                             <Jumbotron style={{padding: 10, borderRadius: '5px'}}>
                                 <Button block bsStyle="danger" onClick={this.closeModal}>Close Dialog</Button>
-                                <table>
-                                    <th>
-                                        <h3 className="text-uppercase">Inquiry Details</h3>
-                                    </th>
-
-                                    <tr>
-                                        <td>
-                                            <b>User's Name: </b>
-                                        </td>
-                                        <td>
-                                            {selectedTicket.user_name}
-                                        </td>
-                                        <td>
-                                            <b>User's email: </b>
-                                        </td>
-                                        <td>
-                                            {selectedTicket.user_email}
-                                        </td>
-                                    </tr>
+                                <table className="ticketData table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colSpan={3} >
+                                                <h3 className="text-uppercase">Inquiry Details</h3>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <b>User's Name: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.user_name}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>User's email: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.user_email}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Ticket ID: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.id}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>OS: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.os}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Issue: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.software_issue}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Status: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.status}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Description: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.description}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Comment: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.comment}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Priority: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {(selectedTicket.priority === null) ? "-NA-" : selectedTicket.priority}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Escalation Level: </b>
+                                            </td>
+                                            <td colSpan={2}>
+                                                {selectedTicket.level}
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                                <p><b>Ticket ID: </b>{selectedTicket.id}</p> <p><b>OS: </b>{selectedTicket.os}</p>
-                                <p><b>Issue: </b><br/>{selectedTicket.software_issue}</p>
-                                <p><b>Status: </b>{selectedTicket.status}</p>
-                                <p><b>Description: </b><br/>{selectedTicket.description}</p>
-                                <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
-                                <div className="md-col-4 pull-left"><b>Priority: </b>{(selectedTicket.priority === null) ? "-NA-" : selectedTicket.priority}</div>
-                                <div className="md-col-4 pull-right"><b>Escalation Level: </b>{selectedTicket.level}</div>
                                 {selectedTicket.esc_requested === 1 && (
                                     <div>
                                         <hr/>
-                                        Escalate Me
+                                        <h2>Escalation Request</h2>
+                                        <button bsStyle="success">Grant</button>
+                                        <button bsStyle="fail">Decline</button>
                                     </div>
                                 )}
                                 {techUsers.length > 0 && (
