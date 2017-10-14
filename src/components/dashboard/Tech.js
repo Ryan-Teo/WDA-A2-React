@@ -9,9 +9,9 @@ class Tech extends Component {
     state = {
         tickets: [],
         selectedTicket: null,
-        commentValue:null,
+        editorState: {},
         priority:null,
-        status:null
+        status:"please specify status"
     }
 
 
@@ -64,14 +64,15 @@ class Tech extends Component {
         this.setState({ priority: e.target.value });
     }
 
+
     // Handle change on select tag on changing status value
     handleStatusOptionChange = (e) => {
         this.setState({ status: e.target.value });
     }
 
     // Handle change on editor
-    onEditorStateChange = (e) => {
-        this.setState({ commentValue: e.target.value });
+    onEditorStateChange = (editorState) => {
+        this.setState({ editorState, });
     }
 
     //Post to API url in laravel side
@@ -116,7 +117,7 @@ class Tech extends Component {
     /* render page */
     render () {
         const vm = this;
-        const { tickets, selectedTicket } = this.state;
+        const { tickets, selectedTicket, editorState } = this.state;
 
         return(
             <div>
@@ -184,60 +185,49 @@ class Tech extends Component {
                                         <form onSubmit={this.handleSubmit}>
                                             <div class ="container">
                                                 <Editor
-                                                    editorState={this.state.commentValue}
-                                                    toolbarClassName="toolbarClassName"
-                                                    wrapperClassName="wrapperClassName"
-                                                    editorClassName="editorClassName"
+                                                    editorState={editorState}
+                                                    toolbarOnFocus
+                                                    wrapperClassName="wrapper-class"
+                                                    editorClassName="editor-class"
+                                                    toolbarClassName="toolbar-class"
                                                     onEditorStateChange={this.onEditorStateChange}
-                                                    value = {this.state.commentValue}
                                                 />
+                                            </div>
 
                                                 {/*  edit selectedTicket status  */}
-                                                <label>
-                                                    Ticket Status:
-                                                    <select value={this.state.status} onChange={this.handleStatusOptionChange} defaultValue disabled>
+                                                <h3>Ticket Status</h3>
+                                                    <select value={this.state.status} onChange={this.handleStatusOptionChange} >
                                                         <option value="resolved">Resolved</option>
                                                         <option value="unresolved">Unresolved</option>
+                                                        <option value="pending">Pending</option>
+                                                        <option value="undefined">Undefined</option>
                                                     </select>
-                                                </label>
 
                                                 {/* update selectedTicket priority through radio button */}
+                                                <h3>Ticket Priority</h3>
+                                            <div className="radio">
                                                 <label>
-                                                    Ticket Priority:
-                                                    <div className="radio">
-                                                        <label>
-                                                            <input type="radio"
-                                                                   value="low"
-                                                                   checked={this.state.priority === 'low'}
-                                                                   onChange={this.handlePriorityOptionChange} />
-                                                            />
-                                                            Low
-                                                        </label>
-                                                    </div>
-
-                                                    <div className="radio">
-                                                        <label>
-                                                            <input type="radio"
-                                                                   value="medium"
-                                                                   checked={this.state.priority === 'low'}
-                                                                   onChange={this.handlePriorityOptionChange} />
-                                                            />
-                                                            Medium
-                                                        </label>
-                                                    </div>
-
-                                                    <div className="radio">
-                                                        <label>
-                                                            <input type="radio"
-                                                                   value="high"
-                                                                   checked={this.state.priority === 'low'}
-                                                                   onChange={this.handlePriorityOptionChange} />
-                                                            />
-                                                            High
-                                                        </label>
-                                                    </div>
+                                                    <input type="radio" value="low"
+                                                           checked={this.state.priority === 'low'}
+                                                           onChange={this.handlePriorityOptionChange} />
+                                                    Low
                                                 </label>
-
+                                            </div>
+                                            <div className="radio">
+                                                <label>
+                                                    <input type="radio" value="medium"
+                                                           checked={this.state.priority === 'medium'}
+                                                           onChange={this.handlePriorityOptionChange} />
+                                                    Medium
+                                                </label>
+                                            </div>
+                                            <div className="radio">
+                                                <label>
+                                                    <input type="radio" value="high"
+                                                           checked={this.state.priority === 'high'}
+                                                           onChange={this.handlePriorityOptionChange} />
+                                                    High
+                                                </label>
                                             </div>
 
                                             <div className="clearfix"><br/>
