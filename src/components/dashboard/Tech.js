@@ -31,10 +31,10 @@ const customStyles = {
 class Tech extends Component {
     state = {
         tickets: [],
-        selectedTicket: null,
+        selectedTicket:null,
         editorState: EditorState.createEmpty(),
-        priority:null,
-        modalIsOpen: false
+        status :null,
+        modalIsOpen:false
     }
 
 
@@ -80,19 +80,13 @@ class Tech extends Component {
     }
 
     /* Update selectedTicket state */
-    ticketUpdateClick = (ticket) => {
+    ticketDetailsClick = (ticket) => {
         const { selectedTicket } = this.state;
         this.setState({
             selectedTicket: (selectedTicket !== null && selectedTicket.id === ticket.id ? null : ticket),
             modalIsOpen: true //open up modal screen
         });
     }
-
-    // Handle change on radio button on changing priority value
-    handlePriorityOptionChange = (e) => {
-        this.setState({ priority: e.target.value });
-    }
-
 
     // Handle change on select tag on changing status value
     handleStatusOptionChange = (e) => {
@@ -109,8 +103,9 @@ class Tech extends Component {
     //Post to API url in laravel side
     updateTicket()
     {
-        var priority = this.state.priority;
+        console.log("ticket id is :" + this.selectedTicket.id )
         var status = this.state.status;
+        console.log("ticket status is  :" + this.state.status )
         var comment = this.state.editorState;
 
         fetch(apiurl + "/api/inquiryCRUD" + this.state.selectedTicket.id +"/update",
@@ -122,15 +117,15 @@ class Tech extends Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    priority: priority,
                     status: status,
-                    comment: comment
+                    comment: comment,
                 }),
             })
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.status === "SUCCESS") {
                     alert("Successfully updated ticket!")
+                    console.log("Successfully updated ticket!")
                     // this.getProducts();
                 } else {
                     alert("Could not update ticket.")
@@ -184,7 +179,7 @@ class Tech extends Component {
                                         <td>{inquiry.status}</td>
                                         {/* each row has an update button and when a ticket is selected, update selectedTicket state */}
                                         <td className ="text-center">
-                                            <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'} onClick={() => vm.ticketUpdateClick(inquiry)}>Edit</Button>
+                                            <Button bsStyle={vm.state.selectedTicket !== null && vm.state.selectedTicket.id === inquiry.id ? 'success' : 'info'} onClick={ () => vm.ticketDetailsClick(inquiry)}>Edit</Button>
                                         </td>
                                     </tr>
                                 ))
@@ -204,7 +199,7 @@ class Tech extends Component {
                         <Jumbotron style={{padding: 10}}>
 
                             {/* button to close dialog */}
-                            <Button block bsStyle="success" onClick={this.closeModal()}>close</Button>
+                            <Button block bsStyle="success" onClick={this.closeModal}>close</Button>
 
                             {/* selectedTicket details */}
                             <h3 className="text-uppercase">Ticket Details</h3>
@@ -237,14 +232,6 @@ class Tech extends Component {
                                         <option value="undefined">Undefined</option>
                                     </select>
 
-                                        {/*  edit selectedTicket status  */}
-                                    <h3>Ticket Status</h3>
-                                        <select value={this.state.status} onChange={this.handleStatusOptionChange} >
-                                            <option value="resolved">Resolved</option>
-                                            <option value="unresolved">Unresolved</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="undefined">Undefined</option>
-                                        </select>
 
                                     <div className="clearfix"><br/>
                                         <Button className="pull-right" typebsStyle="success" type="submit" value="Submit">Update</Button>
