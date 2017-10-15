@@ -32,8 +32,8 @@ class Tech extends Component {
     state = {
         tickets: [],
         selectedTicket:null,
-        editorState: EditorState.createEmpty(), // store comment
-        statusState :null, //store status value
+        editorState: EditorState.createEmpty(),
+        statusState :"Specify Status",
         modalIsOpen:false
     }
 
@@ -105,8 +105,8 @@ class Tech extends Component {
     {
         const { selectedTicket } = this.state
         var id = selectedTicket.id
-        var status = this.statusState;
-        var comment = this.editorState;
+        var status = selectedTicket.statusState;
+        var comment = selectedTicket.editorState;
 
         fetch(apiurl + "/api/inquiryCRUD/" + id +"/update",
             {
@@ -116,7 +116,7 @@ class Tech extends Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "status": status,
+                    "status": " asd",
                     "comment": comment,
                     "priority": selectedTicket.priority,
                     "level": selectedTicket.level,
@@ -138,7 +138,7 @@ class Tech extends Component {
     /* render page */
     render () {
         const vm = this
-        const { tickets, selectedTicket } = this.state
+        const { tickets, selectedTicket,editorState } = this.state
         return(
             <div>
                 <Row>
@@ -207,16 +207,16 @@ class Tech extends Component {
                                 <form onSubmit={this.handleSubmit}>
 
                                         <Editor
-                                            editorState={vm.editorState}
+                                            editorState={editorState}
                                             wrapperClassName="wrapper-class"
                                             editorClassName="editor-class"
                                             toolbarClassName="toolbar-class"
-                                            onEditorStateChange={vm.onEditorStateChange}
+                                            onEditorStateChange={this.onEditorStateChange}
                                         />
 
                                     {/*  edit selectedTicket status  */}
                                     <h3>Ticket Status</h3>
-                                    <select value={vm.statusState} onChange={vm.handleStatusOptionChange} >
+                                    <select value={this.state.statusState} onChange={this.handleStatusOptionChange} >
                                         <option value="resolved">Resolved</option>
                                         <option value="unresolved">Unresolved</option>
                                         <option value="pending">Pending</option>

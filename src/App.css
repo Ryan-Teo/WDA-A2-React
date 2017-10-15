@@ -11,3 +11,28 @@
 .ticketData{
   width : 100%;
 }
+
+.rdw-dropdown-optionwrapper {
+  z-index: 100;
+  position: relative;
+  border: 1px solid #F1F1F1;
+  width: 98%;
+  background: white;
+  border-radius: 2px;
+  margin: 0;
+  padding: 0;
+  max-height: 250px;
+  overflow-y: scroll;
+  color:white;
+}
+
+.editor-class{
+  background: white;
+
+}
+
+.public-DraftEditor-content {
+  height: inherit;
+  text-align: initial;
+  color: black;
+}
