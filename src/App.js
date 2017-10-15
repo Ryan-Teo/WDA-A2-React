@@ -84,9 +84,9 @@ class App extends Component {
                             }
                         </Navbar.Brand>
                     </Navbar.Header>
-                    <Nav pullRight>
+                    <Nav className = "pull-right" >
                         {this.state.user !== null &&
-                            <NavItem pullRight onClick={this.handleSignout}>Sign out</NavItem>
+                            <NavItem className = "pull-right" onClick={this.handleSignout}>Sign out</NavItem>
                         }
                     </Nav>
                 </Navbar>

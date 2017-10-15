@@ -6,6 +6,7 @@ import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Modal from 'react-modal';
+import draftToHtml from 'draftjs-to-html';
 
 const customStyles = {
     overlay : {
@@ -106,9 +107,8 @@ class Tech extends Component {
     //Post to API url in laravel side
     updateTicket()
     {
-        const { selectedTicket } = this.state
+        const { selectedTicket, statusState } = this.state
         var id = selectedTicket.id
-        var status = selectedTicket.statusState;
         var comment = selectedTicket.editorState;
 
         fetch(apiurl + "/api/inquiryCRUD/" + id +"/update",
@@ -119,7 +119,7 @@ class Tech extends Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "status": " asd",
+                    "status": statusState,
                     "comment": comment,
                     "priority": selectedTicket.priority,
                     "level": selectedTicket.level,
@@ -133,8 +133,28 @@ class Tech extends Component {
     handleSubmit = (e) => {
         // var formData = JSON.stringify((e).serializeArray());
         // console.log("Sumbit: ", formData);
-        this.updateTicket();
+        const { selectedTicket, editorState, statusState } = this.state;
+        var id = selectedTicket.id;
+
+        fetch(apiurl + "/api/inquiryCRUD/" + id +"/update",
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "status": statusState,
+                    "comment": draftToHtml(convertToRaw(editorState.getCurrentContent())),
+                    "priority": selectedTicket.priority,
+                    "level": selectedTicket.level,
+                    "esc_requested": false
+                }),
+            })
+            .then ((response) => response.json())
+            .catch(e => e);
         e.preventDefault();
+        // convertToRaw(editorState.getCurrentContent());
     }
 
 
@@ -198,24 +218,115 @@ class Tech extends Component {
                             <Button block bsStyle="success" onClick={this.closeModal}>close</Button>
 
                             {/* selectedTicket details */}
-                            <h3 className="text-uppercase">Ticket Details</h3>
-                            <p><b>ID: </b>{selectedTicket.id}</p>
-                            <p><b>Title: </b><br/>{selectedTicket.title}</p>
-                            <p><b>Comment: </b><br/>{selectedTicket.comment}</p>
-                            <p><b>priority: </b><br/>{selectedTicket.comment}</p>
-                            <p><b>level: </b><br/>{selectedTicket.comment}</p>
+                            <table className="ticketData table-striped">
+                                <thead>
+                                <tr>
+                                    <th colSpan={3} >
+                                        <h3 className="text-uppercase">Inquiry Details</h3>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <b>User's Name: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.user_name}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>User's email: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.user_email}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Ticket ID: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.id}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>OS: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.os}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Issue: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.software_issue}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Status: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.status}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Description: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.description}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Comment: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.comment}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Priority: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {(selectedTicket.priority === null) ? "-NA-" : selectedTicket.priority}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Escalation Level: </b>
+                                    </td>
+                                    <td colSpan={2}>
+                                        {selectedTicket.level}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            {/*<h3 className="text-uppercase">Ticket Details</h3>*/}
+                            {/*<p><b>ID: </b>{selectedTicket.id}</p>*/}
+                            {/*<p><b>Title: </b><br/>{selectedTicket.title}</p>*/}
+                            {/*<p><b>Comment: </b><br/>{selectedTicket.comment}</p>*/}
+                            {/*<p><b>priority: </b><br/>{selectedTicket.comment}</p>*/}
+                            {/*<p><b>level: </b><br/>{selectedTicket.comment}</p>*/}
 
                             {
                                 // render form to add comment to ticket
                                 <form onSubmit={this.handleSubmit}>
 
-                                        <Editor
-                                            editorState={editorState}
-                                            wrapperClassName="wrapper-class"
-                                            editorClassName="editor-class"
-                                            toolbarClassName="toolbar-class"
-                                            onEditorStateChange={this.onEditorStateChange}
-                                        />
+                                    <Editor
+                                        editorState={editorState}
+                                        wrapperClassName="wrapper-class"
+                                        editorClassName="editor-class"
+                                        toolbarClassName="toolbar-class"
+                                        onEditorStateChange={this.onEditorStateChange}
+                                    />
 
                                     {/*  edit selectedTicket status  */}
                                     <h3>Ticket Status</h3>
@@ -228,7 +339,7 @@ class Tech extends Component {
 
 
                                     <div className="clearfix"><br/>
-                                        <Button className="pull-right" typebsStyle="success" type="submit" value="Submit">Update</Button>
+                                        <Button className="pull-right" bsStyle="success" type="submit" value="Submit">Update</Button>
                                     </div>
                                 </form>
                             }
