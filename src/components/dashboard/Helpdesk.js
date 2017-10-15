@@ -4,6 +4,10 @@ import { Table, Row, Col, Jumbotron, Button } from 'react-bootstrap';
 import firebase from 'firebase';
 import Modal from 'react-modal';
 
+//Sample code from react-modal documentation, 'https://www.npmjs.com/package/react-modal', adapted for modal
+
+
+//styling for tickets that require attention
 const divAtten = {
     background: 'orange',
     width: '50%',
@@ -12,6 +16,7 @@ const divAtten = {
     borderRadius: '5px'
 };
 
+//styling for tickets that do not require attention
 const divNoAtten = {
     background: 'grey',
     width: '50%',
@@ -20,17 +25,14 @@ const divNoAtten = {
     borderRadius: '5px'
 };
 
-const prioritySelect = {
-    width: '50%'
-}
-
-
+//Centering button in div
 const centreButton = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
-}
+};
 
+//Styling & Parameters for ticket Modal
 const customStyles = {
     overlay : {
         position          : 'fixed',
@@ -52,16 +54,19 @@ const customStyles = {
     }
 };
 
+//setting width of priority selection in ticket modal
+const prioritySelect = {
+    width: '50%'
+};
+
+//Values for priority options
 const priorityOptions = [
     {
-        value: "Low",
-        id: 1
+        value: "Low"
     },{
-        value: "Moderate",
-        id: 2
+        value: "Moderate"
     },{
-        value: "High",
-        id: 3
+        value: "High"
     }
 ];
 
@@ -71,7 +76,7 @@ class Helpdesk extends Component {
         selectedTicket: null,
         techUsers: [],
         selectedTech: null,
-        modalIsOpen: false
+        modalIsOpen: false //Used to open and close modal
     };
 
     /* Once component has mounted, fetch from API + firebase */
@@ -86,6 +91,9 @@ class Helpdesk extends Component {
                 for(const ele in responseJson) {
                     firebase.database().ref('ticket/'+responseJson[ele].id).on('value', (snapshot) => {
                         if(snapshot.val() === null || responseJson[ele].esc_requested === 1) {
+                            //If ticket has not been assigned
+                            //OR If a request has been made by tech to escalate ticket
+                            //Ticket will be added to pendingTickets array
                             pendingTickets.push(responseJson[ele]);
                             console.log('Ticket Added');
                         }
@@ -126,7 +134,7 @@ class Helpdesk extends Component {
         const { selectedTicket } = this.state;
         this.setState({
             selectedTicket: (selectedTicket !== null && selectedTicket.id === ticket.id ? null : ticket),
-            modalIsOpen: true //open up modal screen
+            modalIsOpen: true //open up modal
         });
     }
 
@@ -135,7 +143,7 @@ class Helpdesk extends Component {
         // this.subtitle.style.color = '#f00';
     }
 
-    /* Close button for dialog */
+    /* Close button for modal */
     closeModal =()=> {
         this.setState({
             modalIsOpen: false,
@@ -167,6 +175,7 @@ class Helpdesk extends Component {
         window.location.reload();
     }
 
+    /*Handles setting ticket priority*/
     setPriority = (e) => {
         const { selectedTicket } = this.state;
         var id = selectedTicket.id;
@@ -193,7 +202,7 @@ class Helpdesk extends Component {
         })
     }
 
-
+    /*Handles Granting Escalation Request*/
     grantEscalation = () => {
         const { selectedTicket } = this.state;
         var id = selectedTicket.id;
@@ -202,7 +211,6 @@ class Helpdesk extends Component {
             alert("Maximum Escalation Level Reached | Request Rejected");
             return;
         }
-
 
         fetch(apiurl + '/api/inquiryCRUD/'+ id +'/update', {
             method: 'POST',
@@ -213,14 +221,14 @@ class Helpdesk extends Component {
                 "status": selectedTicket.status,
                 "comment": selectedTicket.comment,
                 "priority": selectedTicket.priority,
-                "level": selectedTicket.level+1,
-                "esc_requested": false
+                "level": selectedTicket.level+1, //Add 1 to the escalation level
+                "esc_requested": false //Reset request
             })
         })
         .then (() => {
             firebase.database().ref('ticket/'+id).remove((error) => {
-                console.log("Error : ", error);
-                console.log('Ticket unassigned');
+                console.log("Error : ", error); //Log any errors
+                console.log('Ticket unassigned'); //Log unassignment
                 /* Force the view to re-render (async problem) */
                 this.forceUpdate();
             })
@@ -234,6 +242,7 @@ class Helpdesk extends Component {
         })
     }
 
+    /*Handles Declining Escalation Request*/
     declineEscalation = () => {
         const { selectedTicket } = this.state;
         var id = selectedTicket.id;
@@ -247,8 +256,8 @@ class Helpdesk extends Component {
                 "status": selectedTicket.status,
                 "comment": selectedTicket.comment,
                 "priority": selectedTicket.priority,
-                "level": selectedTicket.level,
-                "esc_requested": false
+                "level": selectedTicket.level, //Escalation level stays the same
+                "esc_requested": false //Reset request
             })
         })
         .then ((response) =>{
@@ -261,14 +270,8 @@ class Helpdesk extends Component {
     }
 
 
-
-
-
     /*Render page*/
     render () {
-
-
-
         const vm = this
         const { selectedTicket, tickets, techUsers } = this.state
         console.log("Tech users: ", techUsers);
@@ -323,9 +326,10 @@ class Helpdesk extends Component {
                     onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
                     style={customStyles}
-                    contentLabel="Example Modal"
+                    contentLabel="Inquiry Modal"
                 >
                     {selectedTicket !== null && (
+                        //Ticket Modal
                         <div className="row">
                             <Jumbotron style={{padding: 10, borderRadius: '5px'}}>
                                 <Button block bsStyle="danger" onClick={this.closeModal}>Close Dialog</Button>
@@ -407,6 +411,7 @@ class Helpdesk extends Component {
                                                 <b>Priority: </b>
                                             </td>
                                             <td colSpan={2}>
+                                                {/*Ticket Priority Selection*/}
                                                 <select className="form-control" style={prioritySelect} onChange={this.setPriority} defaultValue=
                                                     {
                                                         (selectedTicket.priority === null) ? "-1" :
@@ -434,6 +439,7 @@ class Helpdesk extends Component {
                                     </tbody>
                                 </table>
                                 {selectedTicket.esc_requested === 1 && (
+                                    // Only render if ticket has an active escalation request
                                     <div>
                                         <hr/>
                                         <h2>Escalation Request</h2>
@@ -444,6 +450,7 @@ class Helpdesk extends Component {
                                     </div>
                                 )}
                                 {techUsers.length > 0 && (
+                                    // Only render if there are tech users available
                                     <div>
                                         <hr/>
                                         <h3 className="text-uppercase">Assign to tech</h3>
