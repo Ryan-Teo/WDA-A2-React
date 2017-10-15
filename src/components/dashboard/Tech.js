@@ -369,13 +369,23 @@ class Tech extends Component {
                                     />
 
                                     {/*  edit selectedTicket status  */}
+
                                     <h3>Ticket Status</h3>
-                                    <select value={this.state.statusState} onChange={this.handleStatusOptionChange} >
+                                    <select onChange={this.handleStatusOptionChange} defaultValue=
+                                        {
+                                            (selectedTicket.status === "pending") ? "pending" :
+                                                (selectedTicket.status === "resolved") ? "resolved" :
+                                                    (selectedTicket.status === "unresolved") ? "unresolved" :
+                                                        (selectedTicket.status === "undefined") ? "undefined" : "ERROR"
+                                        }
+
+                                    >
+                                        <option value="pending" disabled>Pending</option>
                                         <option value="resolved">Resolved</option>
                                         <option value="unresolved">Unresolved</option>
-                                        <option value="pending">Pending</option>
                                         <option value="undefined">In Progress</option>
                                     </select>
+
 
 
                                     <div className="clearfix"><br/>
