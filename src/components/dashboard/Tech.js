@@ -35,7 +35,8 @@ class Tech extends Component {
         selectedTicket:null,
         editorState: EditorState.createEmpty(),
         statusState :'Specify Status',
-        modalIsOpen:false
+        modalIsOpen:false,
+
     }
 
 
@@ -105,31 +106,6 @@ class Tech extends Component {
     }
 
     //Post to API url in laravel side
-    updateTicket()
-    {
-        const { selectedTicket, statusState } = this.state
-        var id = selectedTicket.id
-        var comment = selectedTicket.editorState;
-
-        fetch(apiurl + "/api/inquiryCRUD/" + id +"/update",
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    "status": statusState,
-                    "comment": comment,
-                    "priority": selectedTicket.priority,
-                    "level": selectedTicket.level,
-                    "esc_requested": false
-                }),
-            })
-            .then ((response) => response.json())
-            .catch(e => e);
-    }
-
     handleSubmit = (e) => {
         // var formData = JSON.stringify((e).serializeArray());
         // console.log("Sumbit: ", formData);
@@ -148,13 +124,17 @@ class Tech extends Component {
                     "comment": draftToHtml(convertToRaw(editorState.getCurrentContent())),
                     "priority": selectedTicket.priority,
                     "level": selectedTicket.level,
-                    "esc_requested": false
+                    "esc_requested": false,
+                    "is_closed": selectedTicket.is_closed,
                 }),
             })
-            .then ((response) => response.json())
-            .catch(e => e);
-        e.preventDefault();
-        // convertToRaw(editorState.getCurrentContent());
+            .then ((response) =>{
+                console.log(response);
+            })
+            .then ( () =>{
+                alert('Update success!');
+                window.location.reload();
+            })
     }
 
 
@@ -309,12 +289,6 @@ class Tech extends Component {
                                 </tr>
                                 </tbody>
                             </table>
-                            {/*<h3 className="text-uppercase">Ticket Details</h3>*/}
-                            {/*<p><b>ID: </b>{selectedTicket.id}</p>*/}
-                            {/*<p><b>Title: </b><br/>{selectedTicket.title}</p>*/}
-                            {/*<p><b>Comment: </b><br/>{selectedTicket.comment}</p>*/}
-                            {/*<p><b>priority: </b><br/>{selectedTicket.comment}</p>*/}
-                            {/*<p><b>level: </b><br/>{selectedTicket.comment}</p>*/}
 
                             {
                                 // render form to add comment to ticket
@@ -336,7 +310,6 @@ class Tech extends Component {
                                         <option value="pending">Pending</option>
                                         <option value="In progress">In Progress</option>
                                     </select>
-
 
                                     <div className="clearfix"><br/>
                                         <Button className="pull-right" bsStyle="success" type="submit" value="Submit">Update</Button>
