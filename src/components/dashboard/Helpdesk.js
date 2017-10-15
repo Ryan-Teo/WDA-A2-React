@@ -20,6 +20,10 @@ const divNoAtten = {
     borderRadius: '5px'
 };
 
+const prioritySelect = {
+    width: '50%'
+}
+
 
 const centreButton = {
     display: 'flex',
@@ -47,6 +51,19 @@ const customStyles = {
         border                : '0px',
     }
 };
+
+const priorityOptions = [
+    {
+        value: "Low",
+        id: 1
+    },{
+        value: "Moderate",
+        id: 2
+    },{
+        value: "High",
+        id: 3
+    }
+];
 
 class Helpdesk extends Component {
     state = {
@@ -150,8 +167,7 @@ class Helpdesk extends Component {
         window.location.reload();
     }
 
-
-    grantEscalation = () => {
+    setPriority = (e) => {
         const { selectedTicket } = this.state;
         var id = selectedTicket.id;
 
@@ -161,18 +177,68 @@ class Helpdesk extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                // level: selectedTicket.level+1,
-                "os": "POST WORKS updated",
-                "esc_requested": 0
+                "status": selectedTicket.status,
+                "comment": selectedTicket.comment,
+                "priority": e.target.value, //Set priority level
+                "level": selectedTicket.level,
+                "esc_requested":  selectedTicket.esc_requested
             })
         })
-        .then ((response) => response.json())
-        .catch(e => e);
+        .then ((response) =>{
+            console.log(response);
+        })
+        .then ( () =>{
+            alert('Priority set');
+            window.location.reload();
+        })
+    }
+
+
+    grantEscalation = () => {
+        const { selectedTicket } = this.state;
+        var id = selectedTicket.id;
+
+        if (selectedTicket.level >=3){
+            alert("Maximum Escalation Level Reached | Request Rejected");
+            return;
+        }
+
+
+        fetch(apiurl + '/api/inquiryCRUD/'+ id +'/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "status": selectedTicket.status,
+                "comment": selectedTicket.comment,
+                "priority": selectedTicket.priority,
+                "level": selectedTicket.level+1,
+                "esc_requested": false
+            })
+        })
+        .then (() => {
+            firebase.database().ref('ticket/'+id).remove((error) => {
+                console.log("Error : ", error);
+                console.log('Ticket unassigned');
+                /* Force the view to re-render (async problem) */
+                this.forceUpdate();
+            })
+        })
+        .then ((response) =>{
+            console.log(response);
+        })
+        .then ( () =>{
+            alert('Escalation Successfullly Granted!');
+            window.location.reload();
+        })
     }
 
     declineEscalation = () => {
         const { selectedTicket } = this.state;
-        fetch(apiurl + '/api/inquiryCRUD/'+ selectedTicket.id +'/update', {
+        var id = selectedTicket.id;
+
+        fetch(apiurl + '/api/inquiryCRUD/'+ id +'/update', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -187,6 +253,10 @@ class Helpdesk extends Component {
         })
         .then ((response) =>{
           console.log(response);
+        })
+        .then ( () =>{
+            alert('Escalation Declined!');
+            window.location.reload();
         })
     }
 
@@ -337,7 +407,20 @@ class Helpdesk extends Component {
                                                 <b>Priority: </b>
                                             </td>
                                             <td colSpan={2}>
-                                                {(selectedTicket.priority === null) ? "-NA-" : selectedTicket.priority}
+                                                <select className="form-control" style={prioritySelect} onChange={this.setPriority} defaultValue=
+                                                    {
+                                                        (selectedTicket.priority === null) ? "-1" :
+                                                            (selectedTicket.priority === "Low") ? "Low" :
+                                                                (selectedTicket.priority === "Moderate") ? "Moderate" :
+                                                                    (selectedTicket.priority === "High") ? "High" : "ERROR"
+                                                    }
+                                                >
+                                                    <option value="-1">-NA-</option>
+                                                    {priorityOptions.map((priority, i) => (
+                                                        <option key={i} value={priority.value}>{priority.value}</option>
+                                                    ))}
+                                                </select>
+
                                             </td>
                                         </tr>
                                         <tr>
