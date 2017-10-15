@@ -20,6 +20,13 @@ const divNoAtten = {
     borderRadius: '5px'
 };
 
+
+const centreButton = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+}
+
 const customStyles = {
     overlay : {
         position          : 'fixed',
@@ -143,9 +150,47 @@ class Helpdesk extends Component {
         window.location.reload();
     }
 
-    setEscalation = (bool) => {
 
+    grantEscalation = () => {
+        const { selectedTicket } = this.state;
+        var id = selectedTicket.id;
+
+        fetch(apiurl + '/api/inquiryCRUD/'+ id +'/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                // level: selectedTicket.level+1,
+                "os": "POST WORKS updated",
+                "esc_requested": 0
+            })
+        })
+        .then ((response) => response.json())
+        .catch(e => e);
     }
+
+    declineEscalation = () => {
+        const { selectedTicket } = this.state;
+        fetch(apiurl + '/api/inquiryCRUD/'+ selectedTicket.id +'/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "status": selectedTicket.status,
+                "comment": selectedTicket.comment,
+                "priority": selectedTicket.priority,
+                "level": selectedTicket.level,
+                "esc_requested": false
+            })
+        })
+        .then ((response) =>{
+          console.log(response);
+        })
+    }
+
+
 
 
 
@@ -306,8 +351,10 @@ class Helpdesk extends Component {
                                     <div>
                                         <hr/>
                                         <h2>Escalation Request</h2>
-                                        <button bsStyle="success">Grant</button>
-                                        <button bsStyle="fail">Decline</button>
+                                        <div style= {centreButton}>
+                                            <Button className="col-md-2" bsStyle="success" onClick={this.grantEscalation}>Grant</Button>
+                                            <Button className="col-md-offset-1 col-md-2" bsStyle="warning" onClick={this.declineEscalation}>Decline</Button>
+                                        </div>
                                     </div>
                                 )}
                                 {techUsers.length > 0 && (
