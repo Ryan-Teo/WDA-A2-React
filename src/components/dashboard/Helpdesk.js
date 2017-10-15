@@ -90,7 +90,7 @@ class Helpdesk extends Component {
                 const pendingTickets = [];
                 for(const ele in responseJson) {
                     firebase.database().ref('ticket/'+responseJson[ele].id).on('value', (snapshot) => {
-                        if(snapshot.val() === null || responseJson[ele].esc_requested === 1) {
+                        if( (snapshot.val() === null || responseJson[ele].esc_requested === 1) && responseJson[ele].is_closed === 0) {
                             //If ticket has not been assigned
                             //OR If a request has been made by tech to escalate ticket
                             //Ticket will be added to pendingTickets array
@@ -190,7 +190,8 @@ class Helpdesk extends Component {
                 "comment": selectedTicket.comment,
                 "priority": e.target.value, //Set priority level
                 "level": selectedTicket.level,
-                "esc_requested":  selectedTicket.esc_requested
+                "esc_requested":  selectedTicket.esc_requested,
+                "is_closed": selectedTicket.is_closed,
             })
         })
         .then ((response) =>{
@@ -222,7 +223,8 @@ class Helpdesk extends Component {
                 "comment": selectedTicket.comment,
                 "priority": selectedTicket.priority,
                 "level": selectedTicket.level+1, //Add 1 to the escalation level
-                "esc_requested": false //Reset request
+                "esc_requested": false, //Reset request
+                "is_closed": selectedTicket.is_closed,
             })
         })
         .then (() => {
@@ -257,7 +259,8 @@ class Helpdesk extends Component {
                 "comment": selectedTicket.comment,
                 "priority": selectedTicket.priority,
                 "level": selectedTicket.level, //Escalation level stays the same
-                "esc_requested": false //Reset request
+                "esc_requested": false, //Reset request
+                "is_closed": selectedTicket.is_closed,
             })
         })
         .then ((response) =>{
