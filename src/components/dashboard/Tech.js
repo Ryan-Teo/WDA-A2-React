@@ -33,7 +33,7 @@ class Tech extends Component {
         tickets: [],
         selectedTicket:null,
         editorState: EditorState.createEmpty(),
-        statusState :"Specify Status",
+        statusState :'Specify Status',
         modalIsOpen:false
     }
 
@@ -90,7 +90,10 @@ class Tech extends Component {
 
     // Handle change on select tag on changing status value
     handleStatusOptionChange = (e) => {
+
         this.setState({ statusState: e.target.value });
+        const { statusState } = this.state;
+        console.log(statusState)
     }
 
     // Handle change on editor
@@ -220,7 +223,7 @@ class Tech extends Component {
                                         <option value="resolved">Resolved</option>
                                         <option value="unresolved">Unresolved</option>
                                         <option value="pending">Pending</option>
-                                        <option value="undefined">In Progress</option>
+                                        <option value="In progress">In Progress</option>
                                     </select>
 
 
