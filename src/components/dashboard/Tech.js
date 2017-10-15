@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { apiurl } from "../../helper/constants";
 import firebase from 'firebase';
-import { Editor } from 'react-draft-wysiwyg';
-import {EditorState} from 'draft-js';
 import { Table, Row, Col, Jumbotron, Button } from 'react-bootstrap';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Modal from 'react-modal';
 
@@ -18,8 +18,8 @@ const customStyles = {
     },
     content : {
         top                   : '10%',
-        left                  : '30%',
-        right                 : '30%',
+        left                  : '5%',
+        right                 : '5%',
         bottom                : '10%',
         marginRight           : '0%',
         transform             : 'translate(0%, 0%)',
@@ -32,8 +32,8 @@ class Tech extends Component {
     state = {
         tickets: [],
         selectedTicket:null,
-        editorState: EditorState.createEmpty(),
-        status :null,
+        editorState: EditorState.createEmpty(), // store comment
+        statusState :null, //store status value
         modalIsOpen:false
     }
 
@@ -90,7 +90,7 @@ class Tech extends Component {
 
     // Handle change on select tag on changing status value
     handleStatusOptionChange = (e) => {
-        this.setState({ status: e.target.value });
+        this.setState({ statusState: e.target.value });
     }
 
     // Handle change on editor
@@ -103,40 +103,33 @@ class Tech extends Component {
     //Post to API url in laravel side
     updateTicket()
     {
-        console.log("ticket id is :" + this.selectedTicket.id )
-        var status = this.state.status;
-        console.log("ticket status is  :" + this.state.status )
-        var comment = this.state.editorState;
+        const { selectedTicket } = this.state
+        var id = selectedTicket.id
+        var status = this.statusState;
+        var comment = this.editorState;
 
-        fetch(apiurl + "/api/inquiryCRUD" + this.state.selectedTicket.id +"/update",
+        fetch(apiurl + "/api/inquiryCRUD/" + id +"/update",
             {
                 method: 'POST',
-                mode: 'CORS',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    status: status,
-                    comment: comment,
+                    "status": status,
+                    "comment": comment,
+                    "priority": selectedTicket.priority,
+                    "level": selectedTicket.level,
+                    "esc_requested": false
                 }),
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.status === "SUCCESS") {
-                    alert("Successfully updated ticket!")
-                    console.log("Successfully updated ticket!")
-                    // this.getProducts();
-                } else {
-                    alert("Could not update ticket.")
-                }
-            })
-            .then(this.setState({view: "list"}))
+            .then ((response) => response.json())
+            .catch(e => e);
     }
 
     handleSubmit = (e) => {
-        var formData = JSON.stringify((e).serializeArray());
-        console.log("Sumbit: ", formData);
+        // var formData = JSON.stringify((e).serializeArray());
+        // console.log("Sumbit: ", formData);
         this.updateTicket();
         e.preventDefault();
     }
@@ -212,24 +205,22 @@ class Tech extends Component {
                             {
                                 // render form to add comment to ticket
                                 <form onSubmit={this.handleSubmit}>
-                                    <div className ="container">
+
                                         <Editor
-                                            editorState={this.state.editorState}
-                                            toolbarOnFocus
+                                            editorState={vm.editorState}
                                             wrapperClassName="wrapper-class"
                                             editorClassName="editor-class"
                                             toolbarClassName="toolbar-class"
-                                            onEditorStateChange={this.onEditorStateChange}
+                                            onEditorStateChange={vm.onEditorStateChange}
                                         />
-                                    </div>
 
                                     {/*  edit selectedTicket status  */}
                                     <h3>Ticket Status</h3>
-                                    <select value={this.state.status} onChange={this.handleStatusOptionChange} >
+                                    <select value={vm.statusState} onChange={vm.handleStatusOptionChange} >
                                         <option value="resolved">Resolved</option>
                                         <option value="unresolved">Unresolved</option>
                                         <option value="pending">Pending</option>
-                                        <option value="undefined">Undefined</option>
+                                        <option value="undefined">In Progress</option>
                                     </select>
 
 

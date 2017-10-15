@@ -72,12 +72,21 @@ class App extends Component {
                 <Navbar inverse>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <a href="#">RMIT Helpdesk</a>
+
+                            {
+                                this.state.type  === 'helpdesk' ? (
+                                        <a href="/">RMIT Helpdesk</a>
+                                    )
+                                    : this.state.type === 'tech' ? (
+                                        <a href="/">RMIT Technical Staff</a>
+                                    )
+                                    :<a href="/">ITS Support Portal</a>
+                            }
                         </Navbar.Brand>
                     </Navbar.Header>
                     <Nav pullRight>
                         {this.state.user !== null &&
-                        <NavItem onClick={this.handleSignout}>Sign out</NavItem>
+                            <NavItem pullRight onClick={this.handleSignout}>Sign out</NavItem>
                         }
                     </Nav>
                 </Navbar>
