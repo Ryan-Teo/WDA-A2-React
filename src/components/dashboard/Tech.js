@@ -8,6 +8,13 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Modal from 'react-modal';
 import draftToHtml from 'draftjs-to-html';
 
+//Centering button in div
+const centreButton = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+};
+
 const customStyles = {
     overlay : {
         position          : 'fixed',
@@ -32,16 +39,14 @@ const customStyles = {
 class Tech extends Component {
     state = {
         tickets: [],
-        selectedTicket:null,
+        selectedTicket: null,
         editorState: EditorState.createEmpty(),
-        statusState :'Specify Status',
-        modalIsOpen:false,
-
+        statusState: {},
+        modalIsOpen: false
     }
 
 
-    componentDidMount()
-    {
+    componentDidMount() {
         /* Fetch all tickets and check which tickets have
             been assigned to this tech user
          */
@@ -49,9 +54,9 @@ class Tech extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 const myTickets = [];
-                for(const ele in responseJson) {
-                    firebase.database().ref('ticket/'+responseJson[ele].id).on('value', (snapshot) => {
-                        if(snapshot.val() !== null && snapshot.val().user_id === this.props.user.uid) {
+                for (const ele in responseJson) {
+                    firebase.database().ref('ticket/' + responseJson[ele].id).on('value', (snapshot) => {
+                        if (snapshot.val() !== null && snapshot.val().user_id === this.props.user.uid) {
                             myTickets.push(responseJson[ele]);
 
                             /* Force the view to re-render (async problem) */
@@ -68,13 +73,13 @@ class Tech extends Component {
             })
     }
 
-    afterOpenModal =()=> {
+    afterOpenModal = () => {
         // references are now sync'd and can be accessed.
         // this.subtitle.style.color = '#f00';
     }
 
     /* Close button for dialog */
-    closeModal =()=> {
+    closeModal = () => {
         this.setState({
             modalIsOpen: false,
             selectedTicket: null
@@ -83,7 +88,7 @@ class Tech extends Component {
 
     /* Update selectedTicket state */
     ticketDetailsClick = (ticket) => {
-        const { selectedTicket } = this.state;
+        const {selectedTicket} = this.state;
         this.setState({
             selectedTicket: (selectedTicket !== null && selectedTicket.id === ticket.id ? null : ticket),
             modalIsOpen: true //open up modal screen
@@ -92,10 +97,7 @@ class Tech extends Component {
 
     // Handle change on select tag on changing status value
     handleStatusOptionChange = (e) => {
-
-        this.setState({ statusState: e.target.value });
-        const { statusState } = this.state;
-        console.log(statusState)
+        this.setState({statusState: e.target.value});
     }
 
     // Handle change on editor
@@ -109,10 +111,10 @@ class Tech extends Component {
     handleSubmit = (e) => {
         // var formData = JSON.stringify((e).serializeArray());
         // console.log("Sumbit: ", formData);
-        const { selectedTicket, editorState, statusState } = this.state;
+        const {selectedTicket, editorState, statusState} = this.state;
         var id = selectedTicket.id;
 
-        fetch(apiurl + "/api/inquiryCRUD/" + id +"/update",
+        fetch(apiurl + "/api/inquiryCRUD/" + id + "/update",
             {
                 method: 'POST',
                 headers: {
@@ -128,15 +130,79 @@ class Tech extends Component {
                     "is_closed": selectedTicket.is_closed,
                 }),
             })
-            .then ((response) =>{
+            .then((response) => {
                 console.log(response);
             })
-            .then ( () =>{
-                alert('Update success!');
+            .then(() => {
+                alert('Ticekt Updated!');
+                window.location.reload();
+            })
+        e.preventDefault();
+        // convertToRaw(editorState.getCurrentContent());
+    }
+
+    closeTicket = () => {
+        const {selectedTicket} = this.state;
+        var id = selectedTicket.id;
+
+        fetch(apiurl + '/api/inquiryCRUD/' + id + '/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "status": selectedTicket.status,
+                "comment": selectedTicket.comment,
+                "priority": selectedTicket.priority,
+                "level": selectedTicket.level, //Escalation level stays the same
+                "esc_requested": selectedTicket.esc_requested, //Reset request
+                "is_closed": true,
+            })
+        })
+            .then(() => {
+                firebase.database().ref('ticket/' + id).remove((error) => {
+                    console.log("Error : ", error); //Log any errors
+                    console.log('Ticket removed'); //Log unassignment
+                    /* Force the view to re-render (async problem) */
+                    this.forceUpdate();
+                })
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .then(() => {
+                alert('Ticket Closed!');
                 window.location.reload();
             })
     }
 
+    requestEscalation = () => {
+
+        const {selectedTicket} = this.state;
+        var id = selectedTicket.id;
+
+        fetch(apiurl + '/api/inquiryCRUD/' + id + '/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "status": selectedTicket.status,
+                "comment": selectedTicket.comment,
+                "priority": selectedTicket.priority,
+                "level": selectedTicket.level, //Escalation level stays the same
+                "esc_requested": true, //Reset request
+                "is_closed": selectedTicket.is_closed,
+            })
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .then(() => {
+            alert('Escalation Requested!');
+            window.location.reload();
+        })
+    }
 
     /* render page */
     render () {
@@ -267,9 +333,7 @@ class Tech extends Component {
                                     <td>
                                         <b>Comment: </b>
                                     </td>
-                                    <td colSpan={2}>
-                                        {selectedTicket.comment}
-                                    </td>
+                                    <td colSpan={2} dangerouslySetInnerHTML={{__html: selectedTicket.comment}} />
                                 </tr>
                                 <tr>
                                     <td>
@@ -304,7 +368,7 @@ class Tech extends Component {
 
                                     {/*  edit selectedTicket status  */}
                                     <h3>Ticket Status</h3>
-                                    <select value={this.state.statusState} onChange={this.handleStatusOptionChange} >
+                                    <select value={this.statusState} onChange={this.handleStatusOptionChange} >
                                         <option value="resolved">Resolved</option>
                                         <option value="unresolved">Unresolved</option>
                                         <option value="pending">Pending</option>
@@ -316,6 +380,20 @@ class Tech extends Component {
                                     </div>
                                 </form>
                             }
+                            {(selectedTicket.status === "unresolved" || selectedTicket.status === "resolved") && (
+                                // Only render if ticket has an active escalation request
+                                <div>
+                                    <hr/>
+                                    <h2>Close Inquiry</h2>
+                                    <div style= {centreButton}>
+                                        <Button className="col-md-2" bsStyle="warning" onClick={this.closeTicket}>Close</Button>
+                                    </div>
+                                </div>
+                            )}
+                            <h2>Request Escalation</h2>
+                            <div style= {centreButton}>
+                                <Button className="col-md-2" bsStyle="warning" onClick={this.requestEscalation}>Request Escalation</Button>
+                            </div>
                         </Jumbotron>
                     )}
                 </Modal>
