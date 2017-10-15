@@ -44,3 +44,22 @@
 .rdw-dropdown-optionwrapper{
   color: black;
 }
+
+.editor-class{
+  height: 150px;
+  width: 485px;
+}
+
+.public-DraftStyleDefault-block{
+  height: 100px;
+}
+
+
+#closeTicket{
+  padding: 10px;
+  width: 200px;
+}
+
+#buttonLeft{
+
+}

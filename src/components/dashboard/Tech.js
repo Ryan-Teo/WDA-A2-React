@@ -15,6 +15,8 @@ const centreButton = {
     justifyContent: 'center'
 };
 
+
+
 const customStyles = {
     overlay : {
         position          : 'fixed',
@@ -26,8 +28,8 @@ const customStyles = {
     },
     content : {
         top                   : '10%',
-        left                  : '5%',
-        right                 : '5%',
+        left                  : '20%',
+        right                 : '20%',
         bottom                : '10%',
         marginRight           : '0%',
         transform             : 'translate(0%, 0%)',
@@ -384,23 +386,17 @@ class Tech extends Component {
                                         <option value="undefined">In Progress</option>
                                     </select>
                                     <div className="clearfix"><br/>
-                                        <Button className="pull-right" bsStyle="success" type="submit" value="Submit">Update</Button>
+                                        <Button className="DraftEditor-alignCenter" bsStyle="success" type="submit" value="Submit">Update</Button>
                                     </div>
                                 </form>
                             }
-                            {(selectedTicket.status === "unresolved" || selectedTicket.status === "resolved") && (
-                                // Only render if ticket has an active escalation request
-                                <div>
-                                    <hr/>
-                                    <h2>Close Inquiry</h2>
-                                    <div style= {centreButton}>
-                                        <Button className="col-md-2" bsStyle="warning" onClick={this.closeTicket}>Close</Button>
-                                    </div>
-                                </div>
-                            )}
-                            <h2>Request Escalation</h2>
-                            <div style= {centreButton}>
-                                <Button className="col-md-2" bsStyle="warning" onClick={this.requestEscalation}>Request Escalation</Button>
+                            <div style={centreButton}>
+                                {(selectedTicket.status === "unresolved" || selectedTicket.status === "resolved") && (
+                                    <Button id="closeTicket" className="col-md-2" bsSize="large" bsStyle="warning large" onClick={this.closeTicket}>Close Enquiry</Button>
+                                )}
+                                {(selectedTicket.status === "unresolved" || selectedTicket.status === "in progress" || selectedTicket.status === "pending") && (
+                                    <Button id="closeTicket" className="col-md-2" bsSize="large" bsStyle="danger" onClick={this.requestEscalation}>Request escalation</Button>
+                                )}
                             </div>
                         </Jumbotron>
                     )}
@@ -411,3 +407,5 @@ class Tech extends Component {
 }
 
 export default Tech;
+
+
