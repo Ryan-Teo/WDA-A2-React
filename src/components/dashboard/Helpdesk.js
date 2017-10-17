@@ -406,7 +406,7 @@ class Helpdesk extends Component {
                                                 <b>Comment: </b>
                                             </td>
                                             <td colSpan={2}>
-                                                {selectedTicket.comment}
+                                                <td colSpan={2} dangerouslySetInnerHTML={{__html: selectedTicket.comment}} />
                                             </td>
                                         </tr>
                                         <tr>
