@@ -150,6 +150,7 @@ class Tech extends Component {
         fetch(apiurl + '/api/inquiryCRUD/' + id + '/update', {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -186,6 +187,7 @@ class Tech extends Component {
         fetch(apiurl + '/api/inquiryCRUD/' + id + '/update', {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
