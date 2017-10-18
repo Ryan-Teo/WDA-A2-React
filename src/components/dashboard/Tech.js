@@ -385,7 +385,7 @@ class Tech extends Component {
                                         <option value="pending" disabled>Pending</option>
                                         <option value="resolved">Resolved</option>
                                         <option value="unresolved">Unresolved</option>
-                                        <option value="undefined">In Progress</option>
+                                        <option value="in progress">In Progress</option>
                                     </select>
                                     <div className="clearfix"><br/>
                                         <Button className="DraftEditor-alignCenter" bsStyle="success" type="submit" value="Submit">Update</Button>
